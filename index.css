@@ -1,0 +1,53 @@
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+.main-cont {
+  border: 1px solid orange;
+  font-size: 1rem;
+  color: orange;
+  background-color: black;
+  width: 100%;
+}
+.header {
+  border: 1px solid orange;
+  height: 50px;
+}
+.main {
+  border: 1px solid orange;
+  display: flex;
+}
+.today-info {
+  min-height: 650px;
+  width: 50%;
+  border: 1px solid orange;
+}
+.today-info__search-cont {
+  min-height: 60px;
+  display: flex;
+  background-color: palegreen;
+}
+.today-info__search-cont__text {
+  background-color: palevioletred;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.today-info__search-cont__search-form-cont {
+  background-color: peru;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.week-info {
+  min-height: 650px;
+  width: 50%;
+  border: 1px solid orange;
+}
+.footer {
+  border: 1px solid orange;
+  height: 40px;
+}
