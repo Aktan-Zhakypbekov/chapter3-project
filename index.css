@@ -35,14 +35,14 @@
   align-items: center;
 }
 .today-info__search-cont__search-form-cont {
-  background-color: peru;
+  background-color: rgb(116, 81, 46);
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .today-info__content {
-  background-color: burlywood;
+  background-color: rgb(110, 88, 60);
   display: flex;
   width: 100%;
   min-height: 600px;
