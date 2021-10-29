@@ -62,6 +62,11 @@
   align-items: center;
 }
 
+.temp-converter-button {
+  width: 120px;
+  height: 40px;
+}
+
 .data-cont {
   width: 90%;
   height: 60px;
