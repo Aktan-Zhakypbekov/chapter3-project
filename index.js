@@ -1,6 +1,15 @@
 let url = 'http://api.openweathermap.org/data/2.5/weather?q=';
 let key = '&APPID=d2afd80470d21af0db4b6344884784ed&units=metric';
-let city = '';
+let city = 'moscow';
+let weekValues = [null, null, null, null, null, null, null];
+let values = {
+  temp: null,
+  feelsLike: null,
+  avgTemp: null,
+  maxTemp: null,
+  minTemp: null,
+};
+let tempInCelcius = true;
 
 let cityDom = document.querySelector('.city__text');
 let weatherDom = document.querySelector('.weather__text');
@@ -28,6 +37,33 @@ let weekHumidityDom = document.querySelectorAll('.week-humidity');
 let weekWindSpeedDom = document.querySelectorAll('.week-wind-speed');
 let weekTempDom = document.querySelectorAll('.week-temp');
 
+let searchURL = url + city + key;
+fetch(searchURL, { mode: 'cors' })
+  .then((response) => {
+    return response.json();
+  })
+  .then((response) => {
+    giveConvertableTodayValues(response);
+    displayTodayData(response);
+    let lat = response.coord.lat;
+    let lon = response.coord.lon;
+    let weekUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=d2afd80470d21af0db4b6344884784ed&units=metric`;
+    fetch(weekUrl, { mode: 'cors' })
+      .then((response) => {
+        return response.json();
+      })
+      .then((response) => {
+        giveConvertableWeekValues(response);
+        displayWeekData(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+
 let searchForm = document.querySelector(
   '.today-info__searcg-cont__search-form-cont__form'
 );
@@ -40,8 +76,8 @@ searchForm.addEventListener('submit', (e) => {
       return response.json();
     })
     .then((response) => {
-      giveValues(response);
-      displayTodayData();
+      giveConvertableTodayValues(response);
+      displayTodayData(response);
       let lat = response.coord.lat;
       let lon = response.coord.lon;
       let weekUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=d2afd80470d21af0db4b6344884784ed&units=metric`;
@@ -50,8 +86,7 @@ searchForm.addEventListener('submit', (e) => {
           return response.json();
         })
         .then((response) => {
-          console.log(response);
-          giveWeekValues(response);
+          giveConvertableWeekValues(response);
           displayWeekData(response);
         })
         .catch((error) => {
@@ -63,78 +98,44 @@ searchForm.addEventListener('submit', (e) => {
     });
 });
 
+function giveConvertableWeekValues(data) {
+  for (let i = 1, j = 0; i < data.daily.length; i++, j++) {
+    weekValues[j] = data.daily[i].temp.day;
+  }
+}
 function displayWeekData(data) {
   for (let i = 1, j = 0; i < data.daily.length; i++, j++) {
     weekDaysDom[j].textContent = getDate(data.daily[i].dt);
     weekPressureDom[j].textContent = data.daily[i].pressure + 'hPa';
     weekHumidityDom[j].textContent = data.daily[i].humidity + '%';
     weekWindSpeedDom[j].textContent = data.daily[i].wind_speed + 'km/hr';
-    weekTempDom[j].textContent = weekValues[j] + '\u00B0';
+    weekTempDom[j].textContent = data.daily[i].temp.day + '\u00B0';
   }
 }
-
-let weekValues = [null, null, null, null, null, null, null];
-function giveWeekValues(data) {
-  for (let i = 1, j = 0; i < data.daily.length; i++, j++) {
-    weekValues[j] = data.daily[i].temp.day;
-  }
+function giveConvertableTodayValues(data) {
+  values.temp = data.main.temp;
+  values.feelsLike = data.main.feels_like;
+  values.avgTemp = data.main.temp;
+  values.maxTemp = data.main.temp_max;
+  values.minTemp = data.main.temp_min;
 }
-
-let values = {
-  city: null,
-  weather: null,
-  temp: null,
-  weatherDescr: null,
-  sunrise: null,
-  sunset: null,
-  lat: null,
-  lon: null,
-  feelsLike: null,
-  avgTemp: null,
-  maxTemp: null,
-  minTemp: null,
-  humidity: null,
-  pressure: null,
-  visibility: null,
-  windSpeed: null,
-};
-
-function giveValues(data) {
-  values.city = data.name;
-  values.weather = data.weather[0].main;
-  values.temp = Math.round(data.main.temp * 100) / 100;
-  values.weatherDescr = data.weather[0].description;
-  values.sunrise = getTime(data.sys.sunrise);
-  values.sunset = getTime(data.sys.sunset);
-  values.lat = data.coord.lat;
-  values.lon = data.coord.lon;
-  values.feelsLike = Math.round(data.main.feels_like * 100) / 100;
-  values.avgTemp = Math.round(data.main.temp * 100) / 100;
-  values.maxTemp = Math.round(data.main.temp_max * 100) / 100;
-  values.minTemp = Math.round(data.main.temp_min * 100) / 100;
-  values.humidity = data.main.humidity;
-  values.pressure = data.main.pressure;
-  values.visibility = data.visibility;
-  values.windSpeed = data.wind.speed;
-}
-
-function displayTodayData() {
-  cityDom.textContent = values.city;
-  weatherDom.textContent = values.weather;
-  tempDom.textContent = values.temp + '\u00B0';
-  weatherDescrDom.textContent = values.weatherDescr;
-  sunriseDom.textContent = values.sunrise;
-  sunsetDom.textContent = values.sunset;
-  latDom.textContent = values.lat + '\u00B0';
-  lonDom.textContent = values.lon + '\u00B0';
-  feelsLikeDom.textContent = values.feelsLike + '\u00B0';
-  avgTempDom.textContent = values.avgTemp + '\u00B0';
-  maxTempDom.textContent = values.maxTemp + '\u00B0';
-  minTempDom.textContent = values.minTemp + '\u00B0';
-  humidityDom.textContent = values.humidity + '%';
-  pressureDom.textContent = values.pressure + 'hPa';
-  visibilityDom.textContent = values.visibility + 'm';
-  windSpeedDom.textContent = values.windSpeed + 'km/hr';
+function displayTodayData(data) {
+  cityDom.textContent = data.name;
+  weatherDom.textContent = data.weather[0].main;
+  tempDom.textContent = data.main.temp + '\u00B0';
+  weatherDescrDom.textContent = data.weather[0].description;
+  sunriseDom.textContent = getTime(data.sys.sunrise);
+  sunsetDom.textContent = getTime(data.sys.sunset);
+  latDom.textContent = data.coord.lat + '\u00B0';
+  lonDom.textContent = data.coord.lon + '\u00B0';
+  feelsLikeDom.textContent = data.main.feels_like + '\u00B0';
+  avgTempDom.textContent = data.main.temp + '\u00B0';
+  maxTempDom.textContent = data.main.temp_max + '\u00B0';
+  minTempDom.textContent = data.main.temp_min + '\u00B0';
+  humidityDom.textContent = data.main.humidity + '%';
+  pressureDom.textContent = data.main.pressure + 'hPa';
+  visibilityDom.textContent = data.visibility + 'm';
+  windSpeedDom.textContent = data.wind.speed + 'km/hr';
 }
 function getTime(unix) {
   let time = new Date(unix * 1000).toLocaleTimeString('en-US');
@@ -145,8 +146,6 @@ function getDate(unix) {
   return date;
 }
 
-let tempInCelcius = true;
-
 let tempConverterButton = document.querySelector('.temp-converter-button');
 tempConverterButton.addEventListener('click', (e) => {
   if (tempInCelcius == true) {
@@ -156,33 +155,34 @@ tempConverterButton.addEventListener('click', (e) => {
     tempConverterButton.textContent = 'Convert to fahrenheit';
     tempInCelcius = true;
   }
-  convertTemp(tempInCelcius, values);
-  displayTodayData();
-  for (let i = 0; i < weekTempDom.length; i++) {
-    weekTempDom[i].textContent = weekValues[i] + '\u00B0';
-  }
+  convertTemp(tempInCelcius, values, weekValues);
+  displayConvertedValues(values, weekValues);
 });
 
-function convertTemp(unit, values) {
+function convertTemp(unit, values, weekValues) {
   if (unit) {
-    values.temp = Math.round((values.temp * (9 / 5) + 32) * 100) / 100;
-    values.feelsLike =
-      Math.round((values.feelsLike * (9 / 5) + 32) * 100) / 100;
-    values.avgTemp = Math.round((values.avgTemp * (9 / 5) + 32) * 100) / 100;
-    values.maxTemp = Math.round((values.maxTemp * (9 / 5) + 32) * 100) / 100;
-    values.minTemp = Math.round((values.minTemp * (9 / 5) + 32) * 100) / 100;
+    for (let value in values) {
+      values[value] = Math.round((values[value] * (9 / 5) + 32) * 100) / 100;
+    }
     for (let i = 0; i < weekValues.length; i++) {
       weekValues[i] = Math.round((weekValues[i] * (9 / 5) + 32) * 100) / 100;
     }
   } else {
-    values.temp = Math.round((values.temp - 32) * (5 / 9) * 100) / 100;
-    values.feelsLike =
-      Math.round((values.feelsLike - 32) * (5 / 9) * 100) / 100;
-    values.avgTemp = Math.round((values.avgTemp - 32) * (5 / 9) * 100) / 100;
-    values.maxTemp = Math.round((values.maxTemp - 32) * (5 / 9) * 100) / 100;
-    values.minTemp = Math.round((values.minTemp - 32) * (5 / 9) * 100) / 100;
+    for (let value in values) {
+      values[value] = Math.round((values[value] - 32) * (5 / 9) * 100) / 100;
+    }
     for (let i = 0; i < weekValues.length; i++) {
       weekValues[i] = Math.round((weekValues[i] - 32) * (5 / 9) * 100) / 100;
     }
+  }
+}
+function displayConvertedValues(values, weekValues) {
+  tempDom.textContent = values.temp + '\u00B0';
+  feelsLikeDom.textContent = values.feelsLike + '\u00B0';
+  avgTempDom.textContent = values.avgTemp + '\u00B0';
+  maxTempDom.textContent = values.maxTemp + '\u00B0';
+  minTempDom.textContent = values.minTemp + '\u00B0';
+  for (let i = 0; i < weekTempDom.length; i++) {
+    weekTempDom[i].textContent = weekValues[i] + '\u00B0';
   }
 }

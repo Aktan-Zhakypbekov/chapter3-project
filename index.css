@@ -11,22 +11,21 @@
   width: 100%;
 }
 .header {
-  border: 1px solid orange;
+  border-bottom: 1px solid orange;
   height: 50px;
 }
 .main {
-  border: 1px solid orange;
   display: flex;
 }
 .today-info {
   min-height: 660px;
   width: 50%;
-  border: 1px solid orange;
+  border-right: 1px solid orange;
 }
 .today-info__search-cont {
   min-height: 60px;
   display: flex;
-  background-color: palegreen;
+  border-bottom: 1px solid orange;
 }
 .today-info__search-cont__text {
   flex: 1;
@@ -35,36 +34,53 @@
   align-items: center;
 }
 .today-info__search-cont__search-form-cont {
-  background-color: rgb(116, 81, 46);
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+.search-field {
+  width: 200px;
+  height: 26px;
+  background-color: black;
+  border: 1px solid orange;
+  color: orange;
+  margin: 4px 2px 2px 2px;
+}
+.search-button {
+  width: 55px;
+  height: 26px;
+  background-color: rgb(53, 17, 0);
+  border: 1px solid orange;
+  color: orange;
+  margin: 2px 2px 4px 2px;
+}
 .today-info__content {
-  background-color: rgb(110, 88, 60);
   display: flex;
   width: 100%;
   min-height: 600px;
 }
 .test {
-  border: 3px solid black;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 .today-info__content__block {
   flex: 1;
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 5px;
 }
 
 .temp-converter-button {
   width: 120px;
   height: 40px;
+  background-color: rgb(53, 17, 0);
+  border: 1px solid orange;
+  color: orange;
+  margin-top: 1.5rem;
 }
 
 .data-cont {
@@ -72,44 +88,60 @@
   height: 60px;
   display: flex;
 }
+.main-info {
+}
+.city__text {
+  font-size: 2rem;
+}
+.weather__text {
+  font-size: 2rem;
+}
+.temp__text {
+  font-size: 2rem;
+}
+.weather-descr__text {
+  font-size: 1.5rem;
+}
+
 .data {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex: 1;
-  border: 1px solid red;
+  border: 1px solid orange;
 }
 .data div {
-  background-color: darkgreen;
+  margin-left: 1rem;
 }
 
 .week-info {
   min-height: 660px;
   width: 50%;
-  border: 1px solid orange;
   display: flex;
   flex-direction: column;
 }
 .week-info__titles {
   height: 60px;
   display: flex;
-  border: 1px solid red;
+  border-bottom: 1px solid orange;
 }
 .week-info__block {
   flex: 1;
   display: flex;
-  border: 1px solid red;
+  border-bottom: 1px solid orange;
 }
 .week-data {
   flex: 1;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  border: 1px solid blue;
+}
+.week-data div {
+  margin-left: 1rem;
 }
 
 .footer {
-  border: 1px solid orange;
+  border-top: 1px solid orange;
   height: 40px;
 }
 
@@ -119,6 +151,8 @@
   }
   .today-info {
     width: 100%;
+    border: none;
+    border-bottom: 1px solid orange;
   }
   .week-info {
     width: 100%;
@@ -135,7 +169,6 @@
     flex-direction: column;
   }
   .to-be-deleted {
-    background-color: darkgreen;
     display: none;
   }
 }
