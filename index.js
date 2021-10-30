@@ -1,6 +1,15 @@
+let logsArray = [];
+
+if (localStorage.getItem('logs')) {
+  logsArray = JSON.parse(localStorage.getItem('logs'));
+} else {
+  localStorage.setItem('logs', JSON.stringify(logsArray));
+  logsArray = JSON.parse(localStorage.getItem('logs'));
+}
+
 let url = 'http://api.openweathermap.org/data/2.5/weather?q=';
 let key = '&APPID=d2afd80470d21af0db4b6344884784ed&units=metric';
-let city = 'moscow';
+let city = '';
 let weekValues = [null, null, null, null, null, null, null];
 let values = {
   temp: null,
@@ -10,6 +19,8 @@ let values = {
   minTemp: null,
 };
 let tempInCelcius = true;
+let dataReturned = false;
+let logsOpenForView = false;
 
 let cityDom = document.querySelector('.city__text');
 let weatherDom = document.querySelector('.weather__text');
@@ -37,33 +48,6 @@ let weekHumidityDom = document.querySelectorAll('.week-humidity');
 let weekWindSpeedDom = document.querySelectorAll('.week-wind-speed');
 let weekTempDom = document.querySelectorAll('.week-temp');
 
-let searchURL = url + city + key;
-fetch(searchURL, { mode: 'cors' })
-  .then((response) => {
-    return response.json();
-  })
-  .then((response) => {
-    giveConvertableTodayValues(response);
-    displayTodayData(response);
-    let lat = response.coord.lat;
-    let lon = response.coord.lon;
-    let weekUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=d2afd80470d21af0db4b6344884784ed&units=metric`;
-    fetch(weekUrl, { mode: 'cors' })
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        giveConvertableWeekValues(response);
-        displayWeekData(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
 let searchForm = document.querySelector(
   '.today-info__searcg-cont__search-form-cont__form'
 );
@@ -88,6 +72,11 @@ searchForm.addEventListener('submit', (e) => {
         .then((response) => {
           giveConvertableWeekValues(response);
           displayWeekData(response);
+          dataReturned = true;
+          addLogToLogsArray(city);
+          if (logsOpenForView) {
+            addNewLogToDom();
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -148,15 +137,17 @@ function getDate(unix) {
 
 let tempConverterButton = document.querySelector('.temp-converter-button');
 tempConverterButton.addEventListener('click', (e) => {
-  if (tempInCelcius == true) {
-    tempConverterButton.textContent = 'Convert to celcius';
-    tempInCelcius = false;
-  } else {
-    tempConverterButton.textContent = 'Convert to fahrenheit';
-    tempInCelcius = true;
+  if (dataReturned) {
+    if (tempInCelcius == true) {
+      tempConverterButton.textContent = 'Convert to celsius';
+      tempInCelcius = false;
+    } else {
+      tempConverterButton.textContent = 'Convert to fahrenheit';
+      tempInCelcius = true;
+    }
+    convertTemp(tempInCelcius, values, weekValues);
+    displayConvertedValues(values, weekValues);
   }
-  convertTemp(tempInCelcius, values, weekValues);
-  displayConvertedValues(values, weekValues);
 });
 
 function convertTemp(unit, values, weekValues) {
@@ -184,5 +175,70 @@ function displayConvertedValues(values, weekValues) {
   minTempDom.textContent = values.minTemp + '\u00B0';
   for (let i = 0; i < weekTempDom.length; i++) {
     weekTempDom[i].textContent = weekValues[i] + '\u00B0';
+  }
+}
+
+let seeLogs = document.querySelector('.see-logs-button');
+seeLogs.addEventListener('click', (e) => {
+  displayLogsInterface();
+});
+
+function addLogToLogsArray(log) {
+  if (!logsArray.includes(log)) {
+    logsArray.push(log);
+    localStorage.setItem('logs', JSON.stringify(logsArray));
+  }
+}
+function addNewLogToDom() {
+  document.querySelectorAll('.log-cont').forEach((elem) => {
+    elem.remove();
+  });
+  logsArray.forEach((log) => {
+    let logCont = document.createElement('div');
+    logCont.className = 'log-cont';
+    logCont.style.cssText =
+      'height: 40px; width: 100%; background-color: green; display: flex; justify-content: space-around; align-items: center; border: 1px solid red;';
+
+    let logCityButton = document.createElement('button');
+    logCityButton.className = 'log-city-button';
+    logCityButton.textContent = log;
+
+    let logDeleteButton = document.createElement('button');
+    logDeleteButton.className = 'log-delete-button';
+    logDeleteButton.textContent = 'Delete';
+
+    logCont.appendChild(logCityButton);
+    logCont.appendChild(logDeleteButton);
+    document.querySelector('.logs').appendChild(logCont);
+  });
+}
+function displayLogsInterface() {
+  if (!logsOpenForView) {
+    logsArray.forEach((log) => {
+      let logCont = document.createElement('div');
+      logCont.className = 'log-cont';
+      logCont.style.cssText =
+        'height: 40px; width: 100%; background-color: green; display: flex; justify-content: space-around; align-items: center; border: 1px solid red;';
+
+      let logCityButton = document.createElement('button');
+      logCityButton.className = 'log-city-button';
+      logCityButton.textContent = log;
+
+      let logDeleteButton = document.createElement('button');
+      logDeleteButton.className = 'log-delete-button';
+      logDeleteButton.textContent = 'Delete';
+
+      logCont.appendChild(logCityButton);
+      logCont.appendChild(logDeleteButton);
+      document.querySelector('.logs').appendChild(logCont);
+      logsOpenForView = true;
+    });
+    seeLogs.textContent = 'close logs';
+  } else {
+    document.querySelectorAll('.log-cont').forEach((elem) => {
+      elem.remove();
+    });
+    logsOpenForView = false;
+    seeLogs.textContent = 'see logs';
   }
 }

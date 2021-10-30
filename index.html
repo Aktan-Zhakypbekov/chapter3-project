@@ -11,254 +11,270 @@
     <div class="main-cont">
       <header class="header">Weather forecast system</header>
       <main class="main">
-        <div class="today-info">
-          <div class="today-info__search-cont">
-            <div class="today-info__search-cont__text">
-              <div>Search for cities</div>
+        <div class="info-conts">
+          <div class="today-info">
+            <div class="today-info__search-cont">
+              <div class="today-info__search-cont__text">
+                <div>Search for cities</div>
+              </div>
+              <div class="today-info__search-cont__search-form-cont">
+                <form class="today-info__searcg-cont__search-form-cont__form">
+                  <input
+                    type="text"
+                    class="search-field"
+                    placeholder="Enter your city here"
+                    required
+                    maxlength="50"
+                    minlength="2"
+                    pattern="^[A-Za-z]+$"
+                  />
+                  <button class="search-button">Search</button>
+                </form>
+              </div>
             </div>
-            <div class="today-info__search-cont__search-form-cont">
-              <form class="today-info__searcg-cont__search-form-cont__form">
-                <input
-                  type="text"
-                  class="search-field"
-                  placeholder="Enter your city here"
-                  required
-                />
-                <button class="search-button">Search</button>
-              </form>
+            <div class="today-info__content">
+              <div class="test">
+                <div class="today-info__content__block main-info">
+                  <div class="city">
+                    <div class="city__text">City</div>
+                  </div>
+                  <div class="weather">
+                    <div class="weather__text">Weather</div>
+                  </div>
+                  <div class="temp">
+                    <div class="temp__text">Temperature</div>
+                  </div>
+                  <div class="weather-descr">
+                    <div class="weather-descr__text">Description</div>
+                  </div>
+                  <button class="temp-converter-button">
+                    Convert to fahrenheit
+                  </button>
+                </div>
+                <div class="today-info__content__block">
+                  <div class="data-cont sunrise">
+                    <div class="data sunrise__text"><div>Sunrise</div></div>
+                    <div class="data sunrise__data">
+                      <div class="sunrise__data__content"></div>
+                    </div>
+                  </div>
+                  <div class="data-cont sunset">
+                    <div class="data sunset__text"><div>Sunset</div></div>
+                    <div class="data sunset__data">
+                      <div class="sunset__data__content"></div>
+                    </div>
+                  </div>
+                  <div class="data-cont lat">
+                    <div class="data lat__text">
+                      <div>Lattitude</div>
+                    </div>
+                    <div class="data lat__data">
+                      <div class="lat__data__content"></div>
+                    </div>
+                  </div>
+                  <div class="data-cont lon">
+                    <div class="data lon__text"><div>Longitude</div></div>
+                    <div class="data lon__data">
+                      <div class="lon__data__content"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="test">
+                <div class="today-info__content__block">
+                  <div class="data-cont feels-like">
+                    <div class="data feels-like__text">
+                      <div>Feels like</div>
+                    </div>
+                    <div class="data feels-like__data">
+                      <div class="feels-like__data__content"></div>
+                    </div>
+                  </div>
+                  <div class="data-cont avg-temp">
+                    <div class="data avg-temp__text">
+                      <div>Average temp</div>
+                    </div>
+                    <div class="data avg-temp__data">
+                      <div class="avg-temp__data__content"></div>
+                    </div>
+                  </div>
+                  <div class="data-cont max-temp">
+                    <div class="data max-temp__text"><div>Max temp</div></div>
+                    <div class="data max-temp__data">
+                      <div class="max-temp__data__content"></div>
+                    </div>
+                  </div>
+                  <div class="data-cont min-temp">
+                    <div class="data min-temp__text"><div>Min temp</div></div>
+                    <div class="data min-temp__data">
+                      <div class="min-temp__data__content"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="today-info__content__block">
+                  <div class="data-cont humidity">
+                    <div class="data humidity__text"><div>Humidity</div></div>
+                    <div class="data humidity__data">
+                      <div class="humidity__data__content"></div>
+                    </div>
+                  </div>
+                  <div class="data-cont pressure">
+                    <div class="data pressure__text"><div>Pressure</div></div>
+                    <div class="data pressure__data">
+                      <div class="pressure__data__content"></div>
+                    </div>
+                  </div>
+                  <div class="data-cont visibility">
+                    <div class="data visibility__text">
+                      <div>Visibility</div>
+                    </div>
+                    <div class="data visibility__data">
+                      <div class="visibility__data__content"></div>
+                    </div>
+                  </div>
+                  <div class="data-cont wind-speed">
+                    <div class="data wind-speed__text">
+                      <div>Wind speed</div>
+                    </div>
+                    <div class="data wind-speed__data">
+                      <div class="wind-speed__data__content"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="today-info__content">
-            <div class="test">
-              <div class="today-info__content__block main-info">
-                <div class="city">
-                  <div class="city__text">City</div>
-                </div>
-                <div class="weather">
-                  <div class="weather__text">Weather</div>
-                </div>
-                <div class="temp">
-                  <div class="temp__text">Temperature</div>
-                </div>
-                <div class="weather-descr">
-                  <div class="weather-descr__text">Description</div>
-                </div>
-                <button class="temp-converter-button">
-                  Conver to fahrenheit
-                </button>
+          <div class="week-info">
+            <div class="week-info__titles">
+              <div class="week-data"><div>Days</div></div>
+              <div class="week-data"><div>Pressure</div></div>
+              <div class="week-data"><div>Humidity</div></div>
+              <div class="week-data to-be-deleted"><div>Wind speed</div></div>
+              <div class="week-data"><div>Temperature</div></div>
+            </div>
+            <div class="week-info__block">
+              <div class="week-data">
+                <div class="week-day"></div>
               </div>
-              <div class="today-info__content__block">
-                <div class="data-cont sunrise">
-                  <div class="data sunrise__text"><div>Sunrise</div></div>
-                  <div class="data sunrise__data">
-                    <div class="sunrise__data__content"></div>
-                  </div>
-                </div>
-                <div class="data-cont sunset">
-                  <div class="data sunset__text"><div>Sunset</div></div>
-                  <div class="data sunset__data">
-                    <div class="sunset__data__content"></div>
-                  </div>
-                </div>
-                <div class="data-cont lat">
-                  <div class="data lat__text">
-                    <div>Lattitude</div>
-                  </div>
-                  <div class="data lat__data">
-                    <div class="lat__data__content"></div>
-                  </div>
-                </div>
-                <div class="data-cont lon">
-                  <div class="data lon__text"><div>Longitude</div></div>
-                  <div class="data lon__data">
-                    <div class="lon__data__content"></div>
-                  </div>
-                </div>
+              <div class="week-data">
+                <div class="week-pressure"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-humidity"></div>
+              </div>
+              <div class="week-data to-be-deleted">
+                <div class="week-wind-speed"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-temp"></div>
               </div>
             </div>
-            <div class="test">
-              <div class="today-info__content__block">
-                <div class="data-cont feels-like">
-                  <div class="data feels-like__text"><div>Feels like</div></div>
-                  <div class="data feels-like__data">
-                    <div class="feels-like__data__content"></div>
-                  </div>
-                </div>
-                <div class="data-cont avg-temp">
-                  <div class="data avg-temp__text"><div>Average temp</div></div>
-                  <div class="data avg-temp__data">
-                    <div class="avg-temp__data__content"></div>
-                  </div>
-                </div>
-                <div class="data-cont max-temp">
-                  <div class="data max-temp__text"><div>Max temp</div></div>
-                  <div class="data max-temp__data">
-                    <div class="max-temp__data__content"></div>
-                  </div>
-                </div>
-                <div class="data-cont min-temp">
-                  <div class="data min-temp__text"><div>Min temp</div></div>
-                  <div class="data min-temp__data">
-                    <div class="min-temp__data__content"></div>
-                  </div>
-                </div>
+            <div class="week-info__block">
+              <div class="week-data">
+                <div class="week-day"></div>
               </div>
-              <div class="today-info__content__block">
-                <div class="data-cont humidity">
-                  <div class="data humidity__text"><div>Humidity</div></div>
-                  <div class="data humidity__data">
-                    <div class="humidity__data__content"></div>
-                  </div>
-                </div>
-                <div class="data-cont pressure">
-                  <div class="data pressure__text"><div>Pressure</div></div>
-                  <div class="data pressure__data">
-                    <div class="pressure__data__content"></div>
-                  </div>
-                </div>
-                <div class="data-cont visibility">
-                  <div class="data visibility__text"><div>Visibility</div></div>
-                  <div class="data visibility__data">
-                    <div class="visibility__data__content"></div>
-                  </div>
-                </div>
-                <div class="data-cont wind-speed">
-                  <div class="data wind-speed__text"><div>Wind speed</div></div>
-                  <div class="data wind-speed__data">
-                    <div class="wind-speed__data__content"></div>
-                  </div>
-                </div>
+              <div class="week-data">
+                <div class="week-pressure"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-humidity"></div>
+              </div>
+              <div class="week-data to-be-deleted">
+                <div class="week-wind-speed"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-temp"></div>
+              </div>
+            </div>
+            <div class="week-info__block">
+              <div class="week-data">
+                <div class="week-day"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-pressure"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-humidity"></div>
+              </div>
+              <div class="week-data to-be-deleted">
+                <div class="week-wind-speed"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-temp"></div>
+              </div>
+            </div>
+            <div class="week-info__block">
+              <div class="week-data">
+                <div class="week-day"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-pressure"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-humidity"></div>
+              </div>
+              <div class="week-data to-be-deleted">
+                <div class="week-wind-speed"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-temp"></div>
+              </div>
+            </div>
+            <div class="week-info__block">
+              <div class="week-data">
+                <div class="week-day"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-pressure"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-humidity"></div>
+              </div>
+              <div class="week-data to-be-deleted">
+                <div class="week-wind-speed"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-temp"></div>
+              </div>
+            </div>
+            <div class="week-info__block">
+              <div class="week-data">
+                <div class="week-day"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-pressure"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-humidity"></div>
+              </div>
+              <div class="week-data to-be-deleted">
+                <div class="week-wind-speed"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-temp"></div>
+              </div>
+            </div>
+            <div class="week-info__block">
+              <div class="week-data">
+                <div class="week-day"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-pressure"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-humidity"></div>
+              </div>
+              <div class="week-data to-be-deleted">
+                <div class="week-wind-speed"></div>
+              </div>
+              <div class="week-data">
+                <div class="week-temp"></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="week-info">
-          <div class="week-info__titles">
-            <div class="week-data"><div>Days</div></div>
-            <div class="week-data"><div>Pressure</div></div>
-            <div class="week-data"><div>Humidity</div></div>
-            <div class="week-data to-be-deleted"><div>Wind speed</div></div>
-            <div class="week-data"><div>Temperature</div></div>
-          </div>
-          <div class="week-info__block">
-            <div class="week-data">
-              <div class="week-day"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-pressure"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-humidity"></div>
-            </div>
-            <div class="week-data to-be-deleted">
-              <div class="week-wind-speed"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-temp"></div>
-            </div>
-          </div>
-          <div class="week-info__block">
-            <div class="week-data">
-              <div class="week-day"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-pressure"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-humidity"></div>
-            </div>
-            <div class="week-data to-be-deleted">
-              <div class="week-wind-speed"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-temp"></div>
-            </div>
-          </div>
-          <div class="week-info__block">
-            <div class="week-data">
-              <div class="week-day"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-pressure"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-humidity"></div>
-            </div>
-            <div class="week-data to-be-deleted">
-              <div class="week-wind-speed"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-temp"></div>
-            </div>
-          </div>
-          <div class="week-info__block">
-            <div class="week-data">
-              <div class="week-day"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-pressure"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-humidity"></div>
-            </div>
-            <div class="week-data to-be-deleted">
-              <div class="week-wind-speed"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-temp"></div>
-            </div>
-          </div>
-          <div class="week-info__block">
-            <div class="week-data">
-              <div class="week-day"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-pressure"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-humidity"></div>
-            </div>
-            <div class="week-data to-be-deleted">
-              <div class="week-wind-speed"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-temp"></div>
-            </div>
-          </div>
-          <div class="week-info__block">
-            <div class="week-data">
-              <div class="week-day"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-pressure"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-humidity"></div>
-            </div>
-            <div class="week-data to-be-deleted">
-              <div class="week-wind-speed"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-temp"></div>
-            </div>
-          </div>
-          <div class="week-info__block">
-            <div class="week-data">
-              <div class="week-day"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-pressure"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-humidity"></div>
-            </div>
-            <div class="week-data to-be-deleted">
-              <div class="week-wind-speed"></div>
-            </div>
-            <div class="week-data">
-              <div class="week-temp"></div>
-            </div>
-          </div>
+        <div class="logs">
+          <button class="see-logs-button">See logs</button>
         </div>
       </main>
       <footer class="footer">Made by AZ</footer>
