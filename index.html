@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather forecast app</title>
     <link rel="stylesheet" href="index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="main-cont">
@@ -26,7 +32,7 @@
                     required
                     maxlength="50"
                     minlength="2"
-                    pattern="^[A-Za-z]+$"
+                    pattern="^[a-zA-z\s]+$"
                   />
                   <button class="search-button">Search</button>
                 </form>
@@ -254,7 +260,7 @@
                 <div class="week-temp"></div>
               </div>
             </div>
-            <div class="week-info__block">
+            <div class="week-info__block last-week-info-block">
               <div class="week-data">
                 <div class="week-day"></div>
               </div>

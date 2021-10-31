@@ -53,7 +53,11 @@ let searchForm = document.querySelector(
 );
 searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  city = document.querySelector('.search-field').value;
+  fetchWeatherData(document.querySelector('.search-field').value);
+});
+
+function fetchWeatherData(cityParam) {
+  city = cityParam;
   let searchURL = url + city + key;
   fetch(searchURL, { mode: 'cors' })
     .then((response) => {
@@ -73,7 +77,7 @@ searchForm.addEventListener('submit', (e) => {
           giveConvertableWeekValues(response);
           displayWeekData(response);
           dataReturned = true;
-          addLogToLogsArray(city);
+          addLogToLogsArray(city.toLowerCase());
           if (logsOpenForView) {
             addNewLogToDom();
           }
@@ -85,7 +89,7 @@ searchForm.addEventListener('submit', (e) => {
     .catch((error) => {
       console.log(error);
     });
-});
+}
 
 function giveConvertableWeekValues(data) {
   for (let i = 1, j = 0; i < data.daily.length; i++, j++) {
@@ -197,15 +201,30 @@ function addNewLogToDom() {
     let logCont = document.createElement('div');
     logCont.className = 'log-cont';
     logCont.style.cssText =
-      'height: 40px; width: 100%; background-color: green; display: flex; justify-content: space-around; align-items: center; border: 1px solid red;';
+      'height: 40px; width: 100%; display: flex; justify-content: space-around; align-items: center; border: 1px solid orange;';
 
     let logCityButton = document.createElement('button');
     logCityButton.className = 'log-city-button';
-    logCityButton.textContent = log;
+    logCityButton.style.cssText =
+      'width: 220px; height: 30px; background-color: black; color: orange; border: 1px solid orange;';
+    logCityButton.textContent = log[0].toUpperCase() + log.slice(1);
+    logCityButton.addEventListener('click', (e) => {
+      fetchWeatherData(log);
+    });
 
     let logDeleteButton = document.createElement('button');
     logDeleteButton.className = 'log-delete-button';
+    logDeleteButton.style.cssText =
+      'width: 100px; height: 30px; background-color: black; color: orange; border: 1px solid orange;';
     logDeleteButton.textContent = 'Delete';
+    logDeleteButton.addEventListener('click', (e) => {
+      logsArray.splice(
+        logsArray.indexOf(e.target.parentElement.firstChild.textContent),
+        1
+      );
+      localStorage.setItem('logs', JSON.stringify(logsArray));
+      addNewLogToDom();
+    });
 
     logCont.appendChild(logCityButton);
     logCont.appendChild(logDeleteButton);
@@ -218,15 +237,30 @@ function displayLogsInterface() {
       let logCont = document.createElement('div');
       logCont.className = 'log-cont';
       logCont.style.cssText =
-        'height: 40px; width: 100%; background-color: green; display: flex; justify-content: space-around; align-items: center; border: 1px solid red;';
+        'height: 40px; width: 100%; display: flex; justify-content: space-around; align-items: center; border: 1px solid orange;';
 
       let logCityButton = document.createElement('button');
       logCityButton.className = 'log-city-button';
-      logCityButton.textContent = log;
+      logCityButton.style.cssText =
+        'width: 220px; height: 30px; background-color: black; color: orange; border: 1px solid orange;';
+      logCityButton.textContent = log[0].toUpperCase() + log.slice(1);
+      logCityButton.addEventListener('click', (e) => {
+        fetchWeatherData(log);
+      });
 
       let logDeleteButton = document.createElement('button');
       logDeleteButton.className = 'log-delete-button';
+      logDeleteButton.style.cssText =
+        'width: 100px; height: 30px; background-color: black; color: orange; border: 1px solid orange;';
       logDeleteButton.textContent = 'Delete';
+      logDeleteButton.addEventListener('click', (e) => {
+        logsArray.splice(
+          logsArray.indexOf(e.target.parentElement.firstChild.textContent),
+          1
+        );
+        localStorage.setItem('logs', JSON.stringify(logsArray));
+        addNewLogToDom();
+      });
 
       logCont.appendChild(logCityButton);
       logCont.appendChild(logDeleteButton);
