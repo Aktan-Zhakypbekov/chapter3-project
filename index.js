@@ -81,13 +81,22 @@ function fetchWeatherData(cityParam) {
           if (logsOpenForView) {
             addNewLogToDom();
           }
+          document.querySelector('.search-field').value = '';
         })
         .catch((error) => {
           console.log(error);
+          alert(
+            "Mistake occured during network request or you entered a city that doesn't exist"
+          );
+          document.querySelector('.search-field').value = '';
         });
     })
     .catch((error) => {
       console.log(error);
+      alert(
+        "Mistake occured during network request or you entered a city that doesn't exist"
+      );
+      document.querySelector('.search-field').value = '';
     });
 }
 
@@ -129,6 +138,18 @@ function displayTodayData(data) {
   pressureDom.textContent = data.main.pressure + 'hPa';
   visibilityDom.textContent = data.visibility + 'm';
   windSpeedDom.textContent = data.wind.speed + 'km/hr';
+}
+function addLogToLogsArray(log) {
+  if (!logsArray.includes(log)) {
+    logsArray.push(log);
+    localStorage.setItem('logs', JSON.stringify(logsArray));
+  }
+}
+function addNewLogToDom() {
+  document.querySelectorAll('.log-cont').forEach((elem) => {
+    elem.remove();
+  });
+  displayLogsItems();
 }
 function getTime(unix) {
   let time = new Date(unix * 1000).toLocaleTimeString('en-US');
@@ -187,21 +208,26 @@ seeLogs.addEventListener('click', (e) => {
   displayLogsInterface();
 });
 
-function addLogToLogsArray(log) {
-  if (!logsArray.includes(log)) {
-    logsArray.push(log);
-    localStorage.setItem('logs', JSON.stringify(logsArray));
+function displayLogsInterface() {
+  if (!logsOpenForView) {
+    displayLogsItems();
+    logsOpenForView = true;
+    seeLogs.textContent = 'close logs';
+  } else {
+    document.querySelectorAll('.log-cont').forEach((elem) => {
+      elem.remove();
+    });
+    logsOpenForView = false;
+    seeLogs.textContent = 'see logs';
   }
 }
-function addNewLogToDom() {
-  document.querySelectorAll('.log-cont').forEach((elem) => {
-    elem.remove();
-  });
+
+function displayLogsItems() {
   logsArray.forEach((log) => {
     let logCont = document.createElement('div');
     logCont.className = 'log-cont';
     logCont.style.cssText =
-      'height: 40px; width: 100%; display: flex; justify-content: space-around; align-items: center; border: 1px solid orange;';
+      'height: 40px; width: 100%; display: flex; justify-content: space-evenly; align-items: center; border: 1px solid orange;';
 
     let logCityButton = document.createElement('button');
     logCityButton.className = 'log-city-button';
@@ -219,11 +245,14 @@ function addNewLogToDom() {
     logDeleteButton.textContent = 'Delete';
     logDeleteButton.addEventListener('click', (e) => {
       logsArray.splice(
-        logsArray.indexOf(e.target.parentElement.firstChild.textContent),
+        logsArray.findIndex(
+          (x) =>
+            x == e.target.parentElement.firstChild.textContent.toLowerCase()
+        ),
         1
       );
       localStorage.setItem('logs', JSON.stringify(logsArray));
-      addNewLogToDom();
+      e.target.parentElement.remove();
     });
 
     logCont.appendChild(logCityButton);
@@ -231,48 +260,4 @@ function addNewLogToDom() {
     document.querySelector('.logs').appendChild(logCont);
   });
 }
-function displayLogsInterface() {
-  if (!logsOpenForView) {
-    logsArray.forEach((log) => {
-      let logCont = document.createElement('div');
-      logCont.className = 'log-cont';
-      logCont.style.cssText =
-        'height: 40px; width: 100%; display: flex; justify-content: space-around; align-items: center; border: 1px solid orange;';
-
-      let logCityButton = document.createElement('button');
-      logCityButton.className = 'log-city-button';
-      logCityButton.style.cssText =
-        'width: 220px; height: 30px; background-color: black; color: orange; border: 1px solid orange;';
-      logCityButton.textContent = log[0].toUpperCase() + log.slice(1);
-      logCityButton.addEventListener('click', (e) => {
-        fetchWeatherData(log);
-      });
-
-      let logDeleteButton = document.createElement('button');
-      logDeleteButton.className = 'log-delete-button';
-      logDeleteButton.style.cssText =
-        'width: 100px; height: 30px; background-color: black; color: orange; border: 1px solid orange;';
-      logDeleteButton.textContent = 'Delete';
-      logDeleteButton.addEventListener('click', (e) => {
-        logsArray.splice(
-          logsArray.indexOf(e.target.parentElement.firstChild.textContent),
-          1
-        );
-        localStorage.setItem('logs', JSON.stringify(logsArray));
-        addNewLogToDom();
-      });
-
-      logCont.appendChild(logCityButton);
-      logCont.appendChild(logDeleteButton);
-      document.querySelector('.logs').appendChild(logCont);
-      logsOpenForView = true;
-    });
-    seeLogs.textContent = 'close logs';
-  } else {
-    document.querySelectorAll('.log-cont').forEach((elem) => {
-      elem.remove();
-    });
-    logsOpenForView = false;
-    seeLogs.textContent = 'see logs';
-  }
-}
+/////////////////////////////////////////////////////

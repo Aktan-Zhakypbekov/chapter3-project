@@ -196,7 +196,12 @@
   .today-info__search-cont {
     flex-direction: column;
   }
-  .to-be-deleted {
+  .week-wind-speed-delete {
+    display: none;
+  }
+}
+@media (max-width: 340px) {
+  .week-pressure-delete {
     display: none;
   }
 }
