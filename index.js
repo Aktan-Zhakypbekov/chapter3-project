@@ -7,7 +7,7 @@ if (localStorage.getItem('logs')) {
   logsArray = JSON.parse(localStorage.getItem('logs'));
 }
 
-let url = 'http://api.openweathermap.org/data/2.5/weather?q=';
+let url = 'https://api.openweathermap.org/data/2.5/weather?q=';
 let key = '&APPID=d2afd80470d21af0db4b6344884784ed&units=metric';
 let city = '';
 let weekValues = [null, null, null, null, null, null, null];
